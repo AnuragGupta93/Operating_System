@@ -1,0 +1,1969 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// fcfs
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+int n;
+cin>>n;
+vector<int>arr(n);
+vector<int>data(n);
+vector<pair<int,int> >pp(n);
+for(int i=0;i<n;i++)
+cin>>arr[i];
+for(int i=0;i<n;i++)
+cin>>data[i];
+
+for(int i=0;i<n;i++)
+{
+ pp[i].first=arr[i];
+ pp[i].second=data[i];
+}
+
+sort(pp.begin(),pp.end());
+
+int time=0;
+
+vector<int>ct(n);
+vector<int>wt(n);
+vector<int>tat(n);
+
+for(int i=0;i<n;i++)
+{
+   
+   int at=pp[i].first;
+   int bt=pp[i].second;
+   
+   if(time<at)
+   time=at;
+   
+   ct[i]=time+bt;
+   wt[i]=time-at;
+   tat[i]=ct[i]-at;
+   time=time+bt;   
+}
+
+int avgtat=0,avgwt=0;
+
+for(int i=0;i<n;i++)
+cout<<wt[i]<<" ";
+cout<<endl;
+
+for(int i=0;i<n;i++)
+cout<<tat[i]<<" ";
+cout<<endl;
+
+
+for(int i=0;i<n;i++)
+avgtat=avgtat+tat[i];
+for(int i=0;i<n;i++)
+avgwt=avgwt+wt[i];
+
+cout<<(float)(avgtat)/(float)(n)<<endl;
+cout<<(float)(avgwt)/(float)(n)<<endl;
+
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//fcfs 2
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+int n;
+cin>>n;
+vector<int>arr(n);
+vector<int>data(n);
+vector<pair<int,int> >pp(n);
+for(int i=0;i<n;i++)
+cin>>arr[i];
+for(int i=0;i<n;i++)
+cin>>data[i];
+
+for(int i=0;i<n;i++)
+{
+ pp[i]={arr[i],data[i]};
+}
+
+sort(pp.begin(),pp.end());
+
+int time=0;
+
+vector<int>ct(n);
+vector<int>wt(n);
+vector<int>tat(n);
+
+for(int i=0;i<n;i++)
+{
+   
+   int at=arr[i];
+   int bt=data[i];
+   
+   if(time<at)
+   time=at;
+   
+   ct[i]=time+bt;
+   wt[i]=time-at;
+   tat[i]=ct[i]-at;
+   time=time+bt;   
+}
+
+int avgtat=0,avgwt=0;
+
+for(int i=0;i<n;i++)
+cout<<wt[i]<<" ";
+cout<<endl;
+
+for(int i=0;i<n;i++)
+cout<<tat[i]<<" ";
+cout<<endl;
+
+
+for(int i=0;i<n;i++)
+avgtat=avgtat+tat[i];
+for(int i=0;i<n;i++)
+avgwt=avgwt+wt[i];
+
+cout<<(float)(avgtat)/(float)(n)<<endl;
+cout<<(float)(avgwt)/(float)(n)<<endl;
+
+
+
+
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// sjf non
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+int n;
+cin>>n;
+vector<int>arr(n);
+vector<int>data(n);
+vector<pair<int,int> >pp(n);
+for(int i=0;i<n;i++)
+cin>>arr[i];
+for(int i=0;i<n;i++)
+cin>>data[i];
+
+for(int i=0;i<n;i++)
+{
+ pp[i].first=arr[i];
+ pp[i].second=data[i];
+}
+
+sort(pp.begin(),pp.end());
+
+int time=pp[0].first;
+
+vector<int>ct(n);
+vector<int>wt(n);
+vector<int>tat(n);
+
+for(int i=0;i<n;i++)
+{   int mini=i;
+   int at=pp[i].first;
+   int bt=pp[i].second;
+   
+   for(int j=0;j<n;j++)
+   {
+         if(pp[j].first<=time)
+         {
+             if(pp[j].second<bt)
+             {
+               at=pp[j].first;
+                bt=pp[j].second;
+               mini=j;
+             }
+         }
+         
+         
+   }
+   
+  
+   
+   if(time<at)
+   time=at;
+   
+   ct[i]=time+bt;
+   wt[i]=time-at;
+   tat[i]=ct[i]-at;
+   time=time+bt;
+     
+   pp[mini].first=INT_MAX;
+   pp[mini].second=INT_MAX;
+}
+
+int avgtat=0,avgwt=0;
+
+for(int i=0;i<n;i++)
+cout<<wt[i]<<" ";
+cout<<endl;
+
+for(int i=0;i<n;i++)
+cout<<tat[i]<<" ";
+cout<<endl;
+
+
+for(int i=0;i<n;i++)
+avgtat=avgtat+tat[i];
+for(int i=0;i<n;i++)
+avgwt=avgwt+wt[i];
+
+cout<<(float)(avgtat)/(float)(n)<<endl;
+cout<<(float)(avgwt)/(float)(n)<<endl;
+
+
+
+
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// sjf prem
+
+#include<bits/stdc++.h>
+using namespace std;
+
+bool check(vector<bool>flag)
+{
+  for(int i=0;i<flag.size();i++)
+  if(flag[i]==false)return true;
+  
+  return false;
+}
+
+int main()
+{
+int n;
+cin>>n;
+vector<int>arr(n);
+vector<int>data(n);
+vector<pair<int,int> >pp(n);
+for(int i=0;i<n;i++)
+cin>>arr[i];
+for(int i=0;i<n;i++)
+cin>>data[i];
+
+for(int i=0;i<n;i++)
+{
+ pp[i].first=arr[i];
+ pp[i].second=data[i];
+}
+
+sort(pp.begin(),pp.end());
+
+int time=pp[0].first;
+
+vector<int>ct(n);
+vector<int>wt(n);
+vector<int>tat(n);
+vector<bool>flag(n,false);
+vector<pair<int,int> >backup=pp;
+while(check(flag))
+{   int mini=0;
+   int at=pp[0].first;
+   int bt=pp[0].second;
+   
+   for(int j=0;j<n;j++)
+   {
+         if(pp[j].first<=time)
+         {
+             if(pp[j].second<bt)
+             {
+               at=pp[j].first;
+                bt=pp[j].second;
+               mini=j;
+             }
+         }
+         
+         
+   }
+   
+  
+   
+   if(time<at)
+   time=at;
+   
+   at=time+1;
+   bt=bt-1;
+     // cout<<"        "<<mini<<endl;
+   if(bt==0)
+   {
+   ct[mini]=time+1;
+   //cout<<ct[mini]<<" "<<mini<<endl;
+   tat[mini]=time+1-backup[mini].first;
+   wt[mini]=tat[mini]-backup[mini].second;
+    pp[mini].first=INT_MAX;
+   pp[mini].second=INT_MAX;
+   flag[mini]=true;
+   }
+   
+   else
+   {
+      pp[mini].first=at;
+   pp[mini].second=bt; 
+   }
+   
+     
+   
+   time++;
+     
+  
+}
+
+int avgtat=0,avgwt=0;
+
+for(int i=0;i<n;i++)
+cout<<wt[i]<<" ";
+cout<<endl;
+
+for(int i=0;i<n;i++)
+cout<<tat[i]<<" ";
+cout<<endl;
+
+
+for(int i=0;i<n;i++)
+avgtat=avgtat+tat[i];
+for(int i=0;i<n;i++)
+avgwt=avgwt+wt[i];
+
+cout<<(float)(avgtat)/(float)(n)<<endl;
+cout<<(float)(avgwt)/(float)(n)<<endl;
+
+
+
+
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// priority scheduling
+
+#include<bits/stdc++.h>
+using namespace std;
+bool check(vector<int>flag)
+{
+
+ for(int i=0;i<flag.size();i++)
+ {
+    if(flag[i]==false)
+    return true;
+ }
+ 
+ return false;
+}
+int main()
+{
+int n;
+cin>>n;
+vector<int>at(n);
+vector<int>bt(n);
+vector<int>pr(n);
+for(int i=0;i<n;i++)
+cin>>at[i];
+for(int i=0;i<n;i++)
+cin>>bt[i];
+for(int i=0;i<n;i++)
+cin>>pr[i];
+
+vector<int>ak=at;
+vector<int>bk=bt;
+int time=0;int ansp=INT_MAX;
+int ansi=0;
+
+for(int i=0;i<n;i++)
+{
+   if(ak[i]<=time)
+   {
+      if(pr[i]<ansp)
+      {
+          ansp=pr[i];
+          ansi=i;
+      }
+   }
+}
+ak[ansi]=1000;
+
+
+vector<int>flag(n,false);
+vector<int>ct(n);vector<int>tat(n);vector<int>wt(n);
+while(check(flag))
+{
+   flag[ansi]=true;
+   cout<<ansi+1<<endl;
+   int aat=at[ansi];
+   int bbt=bt[ansi];
+   time=bbt+time;
+   ct[ansi]=time;
+   bt[ansi]=0;
+   
+   ansp=INT_MAX;
+   
+   for(int i=0;i<n;i++)
+{
+   if(ak[i]<=time&&flag[i]==false)
+   {
+      if(pr[i]<ansp&&flag[i]==false)
+      {
+          ansp=pr[i];
+          ansi=i;
+      }
+   }
+}
+   
+
+}
+
+for(int i=0;i<n;i++)
+   {
+      tat[i]=ct[i]-at[i];
+      wt[i]=tat[i]-bk[i];
+   }
+   
+      int avwt=0,avtat=0;
+      
+      for(int i=0;i<n;i++)
+      cout<<tat[i]<<" ";
+      cout<<endl;
+        for(int i=0;i<n;i++)
+      cout<<wt[i]<<" ";
+      cout<<endl;
+for(int i=0;i<n;i++)
+   {
+   avwt=avwt+wt[i];
+   avtat=avtat+tat[i];
+   
+   }
+   
+   float ans1,ans2;
+    ans1= ((float)avwt)/((float)n);
+    ans2= ((float)avtat)/((float)n);
+    
+    cout<<ans1<<endl;
+    cout<<ans2<<endl;
+
+
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  round robin
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+int main()
+{
+  int n;
+  cin>>n;
+  vector<int>at(n);
+  vector<int>bt(n);
+  vector<pair<int,int> >pp(n);
+  for(int i=0;i<n;i++)
+  {
+    cin>>at[i];
+    pp[i].first=at[i];
+    pp[i].second=i;
+  }
+  
+  sort(pp.begin(),pp.end());
+  
+       vector<int>ak=at;
+  for(int i=0;i<n;i++)
+  cin>>bt[i];
+  vector<int>bk=bt;
+  int mint=INT_MAX;int index;
+  for(int i=0;i<n;i++)
+  {
+    if(at[i]<mint)
+    {
+    mint=at[i];
+    index=i;
+    }
+  }
+  
+  
+  vector<int>ft(n);
+  int qt;
+  cin>>qt;
+  int time=mint;
+  
+   queue<int>q;
+   q.push(index);
+   pp[0].first=INT_MAX;
+   
+   q.push(-1);
+   
+   bool flag=true;
+   while(!q.empty())
+   {
+       int rr=q.front();q.pop();
+       if(rr!=-1)
+       {
+          cout<<"rr ="<<rr<<endl;
+          if(at[rr]>time)
+          q.push(rr);
+          else
+          {
+             flag=false;
+             int cut=min(qt,bt[rr]);
+             time=time+cut;
+             bt[rr]=bt[rr]-cut;
+             
+             
+             for(int i=0;i<n;i++)
+          {  cout<<"      loop "<<time<<endl;
+          if(pp[i].first<=time)
+          {q.push(pp[i].second);
+            pp[i].first=1000;
+          }}
+             if(bt[rr]>0)
+             q.push(rr);
+             else if(bt[rr]==0)
+             {cout<<"              "<<time<<endl;
+             ft[rr]=time;
+             }
+             else 
+             cout<<"eror"<<endl;
+          }
+          
+          
+          
+       }
+       else
+       {
+          cout<<rr<<" "<<time<<endl;
+         if(q.empty()==false)
+         q.push(-1);
+         if(flag)
+         time++;
+                   cout<<rr<<" "<<time<<endl;
+       }
+       
+   
+   }
+    for(int i=0;i<n;i++)
+      cout<<ft[i]<<" ";
+      cout<<endl;
+   vector<int>tat(n);
+   vector<int>wt(n);
+   for(int i=0;i<n;i++)
+   {
+      tat[i]=ft[i]-at[i];
+      wt[i]=tat[i]-bk[i];
+   }
+   int avwt=0,avtat=0;
+   
+      for(int i=0;i<n;i++)
+      cout<<tat[i]<<" ";
+      cout<<endl;
+        for(int i=0;i<n;i++)
+      cout<<wt[i]<<" ";
+      cout<<endl;
+   for(int i=0;i<n;i++)
+   {
+   avwt=avwt+wt[i];
+   avtat=avtat+tat[i];
+   
+   }
+   
+   float ans1,ans2;
+    ans1= ((float)avwt)/((float)n);
+    ans2= ((float)avtat)/((float)n);
+    
+    cout<<ans1<<endl;
+    cout<<ans2<<endl;
+
+}
+  
+ //////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  round overhead
+#include<bits/stdc++.h>
+using namespace std;
+
+
+int main()
+{
+  int n;
+  cin>>n;
+  int oh;
+  
+  vector<int>at(n);
+  vector<int>bt(n);
+  
+  vector<pair<int,int> >pp(n);
+  for(int i=0;i<n;i++)
+  {
+    cin>>at[i];
+    pp[i].first=at[i];
+    pp[i].second=i;
+  }
+  
+  sort(pp.begin(),pp.end());
+  
+       vector<int>ak=at;
+  for(int i=0;i<n;i++)
+  cin>>bt[i];
+  vector<int>bk=bt;
+  int mint=INT_MAX;int index;
+  for(int i=0;i<n;i++)
+  {
+    if(at[i]<mint)
+    {
+    mint=at[i];
+    index=i;
+    }
+  }
+  
+  
+  vector<int>ft(n);
+  int qt;
+  cin>>qt;
+  cin>>oh;
+  int time=mint;
+  
+   queue<int>q;
+   q.push(index);
+   pp[0].first=INT_MAX;
+   
+   q.push(-1);
+   
+   bool flag=true;
+   while(!q.empty())
+   {
+       int rr=q.front();q.pop();
+       if(rr!=-1)
+       {
+          cout<<"rr ="<<rr<<endl;
+          if(at[rr]>time)
+          q.push(rr);
+          else
+          {
+             flag=false;
+             int cut=min(qt,bt[rr]);
+             time=time+cut;
+             bt[rr]=bt[rr]-cut;
+             time=time+oh;
+             
+             for(int i=0;i<n;i++)
+          {  cout<<"      loop "<<time<<endl;
+          if(pp[i].first<=time-oh)
+          {q.push(pp[i].second);
+            pp[i].first=1000;
+          }}
+             if(bt[rr]>0)
+             q.push(rr);
+             else if(bt[rr]==0)
+             {cout<<"              "<<time<<endl;
+             ft[rr]=time-oh;
+             }
+             else 
+             cout<<"eror"<<endl;
+          }
+          
+          
+          
+       }
+       else
+       {
+          cout<<rr<<" "<<time<<endl;
+         if(q.empty()==false)
+         q.push(-1);
+         if(flag)
+         time++;
+                   cout<<rr<<" "<<time<<endl;
+       }
+       
+   
+   }
+    for(int i=0;i<n;i++)
+      cout<<ft[i]<<" ";
+      cout<<endl;
+   vector<int>tat(n);
+   vector<int>wt(n);
+   for(int i=0;i<n;i++)
+   {
+      tat[i]=ft[i]-at[i];
+      wt[i]=tat[i]-bk[i];
+   }
+   int avwt=0,avtat=0;
+   
+      for(int i=0;i<n;i++)
+      cout<<tat[i]<<" ";
+      cout<<endl;
+        for(int i=0;i<n;i++)
+      cout<<wt[i]<<" ";
+      cout<<endl;
+   for(int i=0;i<n;i++)
+   {
+   avwt=avwt+wt[i];
+   avtat=avtat+tat[i];
+   
+   }
+   
+   float ans1,ans2;
+    ans1= ((float)avwt)/((float)n);
+    ans2= ((float)avtat)/((float)n);
+    
+    cout<<ans1<<endl;
+    cout<<ans2<<endl;
+  
+
+
+}
+ //////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// multiqueue scheduling
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+bool check(vector<bool>flag)
+{
+
+ for(int i=0;i<flag.size();i++)
+ {
+    if(flag[i]==false)
+    return true;
+ }
+ 
+ return false;
+}
+
+
+bool check1(queue<int>q1,queue<int>q2,queue<int>q3)
+{
+ if(q1.empty()==false)
+ return true;
+ if(q2.empty()==false)
+ return true;
+ if(q3.empty()==false)
+ return true;
+ return false;
+}
+
+
+int main()
+{
+   int n;
+   cin>>n;
+   
+   vector<int> at(n);
+   for(int i=0;i<n;i++)
+   cin>>at[i];
+   
+      vector<int> bt(n);
+   for(int i=0;i<n;i++)
+   cin>>bt[i];
+   
+   queue<int>q1;
+   queue<int>q2;
+   queue<int>q3;
+   
+   vector<int>ans;
+   vector<bool>flag(n,false);
+   
+   int time=0;
+   
+   int t1,t2;
+   cin>>t1>>t2;
+   
+   while(check(flag)||check1(q1,q2,q3))
+   {
+     
+      for(int i=0;i<n;i++)
+      {
+        if(at[i]<=time&&flag[i]==false)
+        {
+            q1.push(i);
+            flag[i]=true;
+        }
+        
+      }  
+      while(!q1.empty())
+        {
+            int ind=q1.front();
+            q1.pop();
+            ans.push_back(ind);
+            int a=at[ind];
+            int b=bt[ind];
+            int pp=min(b,t1);
+            b=b-pp;
+            bt[ind]=b;
+            if(bt[ind]>0)
+            q2.push(ind);
+            time=time+pp;
+            
+     for(int i=0;i<n;i++)
+      {
+        if(at[i]<=time&&flag[i]==false)
+        {
+            q1.push(i);
+            flag[i]=true;
+        }
+        
+      }  
+            
+            
+                    
+        }
+        
+        while(q1.empty()==true && q2.empty()==false)
+        {
+        int ind=q2.front();
+            q2.pop();
+            ans.push_back(ind);
+            int a=at[ind];
+            int b=bt[ind];
+            int pp=min(b,t2);
+            b=b-pp;
+            bt[ind]=b;
+            if(bt[ind]>0)
+            q3.push(ind);
+            time=time+pp;
+            
+     for(int i=0;i<n;i++)
+      {
+        if(at[i]<=time&&flag[i]==false)
+        {
+            q1.push(i);
+            flag[i]=true;
+        }
+        
+      }  
+        
+        
+        }
+        
+        while(q1.empty()==true && q2.empty()==true&&q3.empty()==false)
+        {
+            
+            int ind=q3.front();
+            q3.pop();
+            int a=at[ind];
+            int b=bt[ind];
+            time=time+b;
+            bt[ind]=0;
+              ans.push_back(ind);     
+     for(int i=0;i<n;i++)
+      {
+        if(at[i]<=time&&flag[i]==false)
+        {
+            q1.push(i);
+            flag[i]=true;
+        }
+        
+      }  
+            
+        
+        }
+        
+   
+   }
+   
+   for(int i=0;i<ans.size();i++)
+   cout<<(char)(ans[i]+'A')<<" ";
+   cout<<endl;
+   
+   
+
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// producer consumer
+
+#include<bits/stdc++.h>
+using namespace std;
+int siz;
+
+int mutex =1,empty=3,full=0;int x=0;
+
+int wait(int s){
+return(--s);
+}
+int signal(int s){
+return(++s);
+}
+void producer()
+{
+mutex=wait(mutex);
+full=signal(full);
+empty=wait(empty);
+
+
+x++;
+printf("\nProducer produces the item %d",x);
+mutex=signal(mutex);
+}
+ 
+void consumer()
+{
+mutex=wait(mutex);
+full=wait(full);
+empty=signal(empty);
+
+
+printf("\nConsumer consumes item %d",x);
+x--;
+mutex=signal(mutex);
+}
+
+int main()
+{cout<<"buffer size"<<endl;
+ cin>>empty;
+  cout<<"1.producer \n 2.consumer \n 3.exit \n";
+  
+  int n;
+  while(1)
+  {  cout<<" \n1.producer \n 2.consumer \n 3.exit \n";
+  cin>>n;
+    switch(n)
+    {
+    
+       case 1: 
+               if(mutex==1&& empty!=0)
+               producer();
+               else
+               cout<<"buffer full \n";
+               break;
+               
+      case 2:
+            if((mutex==1)&&(full!=0))
+              consumer();
+            else
+            printf("Buffer is empty \n");
+            break; 
+       case 3 :
+       exit(0);
+       break;
+    
+    }
+    }
+    
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// bankers algorithm
+
+#include<bits/stdc++.h>
+using namespace std;
+bool check(int a,int b,int c,int x,int y,int z)
+{
+   if(a<=x&&b<=y&&c<=z)
+   return true;
+   else 
+   return false;
+}
+int main()
+{
+int n;
+cin>>n;
+vector<int>ax(n);
+vector<int>ay(n);
+vector<int>az(n);
+vector<int>rx(n);
+vector<int>ry(n);
+vector<int>rz(n);
+for(int i=0;i<n;i++)
+{
+   cin>>ax[i]>>ay[i]>>az[i];
+}
+for(int i=0;i<n;i++)
+{
+   cin>>rx[i]>>ry[i]>>rz[i];
+}
+
+
+int tx=2,ty=3,tz=2;
+
+for(int i=0;i<n;i++)
+{
+ tx=tx-ax[i];
+ ty=ty-ay[i];
+ tz=tz-az[i];
+}
+cout<<tx<<ty<<tz<<endl;
+
+queue<int>q;
+queue<int>q1;
+vector<int>ans;
+for(int i=0;i<n;i++)
+q.push(i);
+bool flag=true;
+while(q.empty()==false||q1.empty()==false)
+{
+    while(!q.empty())
+    {
+   int i=q.front();q.pop();
+   //cout<<i<<endl;
+   if(check(rx[i],ry[i],rz[i],tx,ty,tz))
+   {  //cout<<"true"<<i<<endl;
+       flag=false;
+       tx=tx+ax[i];
+       ty=ty+ay[i];
+       tz=tz+az[i];
+       ans.push_back(i);
+       
+   }
+   else
+   q1.push(i);
+   }
+   
+   if(flag)
+   {
+     cout<<"deadlock"<<endl;break;
+   }
+     while(!q1.empty())
+    {
+   int i=q1.front();q1.pop();
+   if(check(rx[i],ry[i],rz[i],tx,ty,tz))
+   {
+       flag=false;
+       tx=tx+ax[i];
+       ty=ty+ay[i];
+       tz=tz+az[i];
+       ans.push_back(i);
+       
+   }
+   else
+   q.push(i);
+   }
+   
+   if(flag)
+   {
+     cout<<"deadlock"<<endl;break;
+   }
+   
+  
+}
+
+
+for(int i=0;i<ans.size();i++)
+cout<<ans[i]<<" ,";
+cout<<endl;
+
+
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  bankers algo all possible solution
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+int n;
+vector<int>ax(10);
+vector<int>ay(10);
+vector<int>az(10);
+vector<int>rx(10);
+vector<int>ry(10);
+vector<int>rz(10);
+int tx=10,ty=5,tz=7;
+
+bool check(int a,int b,int c,int x,int y,int z)
+{
+   if(a<=x&&b<=y&&c<=z)
+   return true;
+   else 
+   return false;
+}
+
+void solve(int i,vector<int>ans,vector<bool>f)
+{
+  if(i>n)return;
+  if(i==n)
+  {
+    for(int j=0;j<ans.size();j++)
+    {
+   cout<<ans[j]<<", ";
+    }
+    cout<<endl;
+    return;
+  }
+  //cout<<"           "<<i<<" "<<f[0]<<endl;
+  vector<int>ca;
+  for(int j=0;j<n;j++)
+  {
+     ca=ans;
+   if(f[j])
+   {
+     if(check(rx[j],ry[j],rz[j],tx,ty,tz))
+     {
+         f[j]=false;
+         //cout<<"        kk "<<j<<" "<<f[0]<<endl;
+       tx=tx+ax[j];
+       ty=ty+ay[j];
+       tz=tz+az[j];
+       ca.push_back(j);
+       solve(i+1,ca,f);
+       
+       tx=tx-ax[j];
+       ty=ty-ay[j];
+       tz=tz-az[j];
+       f[j]=true;
+     }
+   }
+   
+     
+   
+  }
+  
+ 
+}
+
+
+int main()
+{
+
+cin>>n;
+
+for(int i=0;i<n;i++)
+{
+   cin>>ax[i]>>ay[i]>>az[i];
+}
+for(int i=0;i<n;i++)
+{
+   cin>>rx[i]>>ry[i]>>rz[i];
+}
+
+
+
+
+for(int i=0;i<n;i++)
+{
+ tx=tx-ax[i];
+ ty=ty-ay[i];
+ tz=tz-az[i];
+}
+cout<<tx<<ty<<tz<<endl;
+vector<int>ans;
+vector<bool>f(n,true);
+
+solve(0,ans,f);
+
+
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// checkk cycle in resource allocation
+
+#include<bits/stdc++.h>
+using namespace std;
+ vector<int>adj[100];
+
+
+bool iscyc(int i,vector<int>vis,vector<int>rs)
+{
+if(vis[i]==0)
+{
+vis[i]=1;
+rs[i]=1;
+for(int j= 0;j<adj[i].size();j++)
+{
+  int k= adj[i][j];
+  if(vis[k]==0 && iscyc(k,vis,rs))
+    return true;
+   else if(rs[k]==1)
+   return true;
+   
+   
+
+}
+
+}
+
+rs[i]=0;
+return false;
+}
+
+int main()
+{
+  int r,p,n;
+  cin>>p>>r;
+ n=r+p;
+
+ 
+ cout<<"process edges"<<endl;
+ int k;
+ cin>>k;
+ for(int i=0;i<k;i++)
+ {
+   int a,b;cin>>a>>b;
+   b=b+p;
+   adj[a].push_back(b);
+ }
+  cout<<"resource edges"<<endl;
+
+ cin>>k;
+ for(int i=0;i<k;i++)
+ {
+   int a,b;cin>>a>>b;
+   a=a+p;
+   adj[a].push_back(b);
+ }
+ 
+ vector<int>vis(n,0);
+ vector<int>rs(n,0);
+ 
+ for(int i=0;i<n;i++)
+   if(iscyc(i,vis,rs))
+       {
+         cout<<"cycle there"<<endl;
+         return 0;
+       }
+       
+     cout<<"no cycle"<<endl;
+ 
+ 
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  fifo
+
+#include<bits/stdc++.h>
+using namespace std;
+
+bool serch(int a,vector<int>arr)
+{
+    for(int i=0;i<arr.size();i++)
+    if(a==arr[i])return true;
+    return false;
+    
+}
+ void prin(vector<int>arr)
+ {
+   for(int i=0;i<arr.size();i++)
+   cout<<arr[i]<<" ";
+   cout<<endl;
+ }
+int main()
+{
+   int fs;
+   cin>>fs;
+   int n;
+   cin>>n;
+   vector<int>arr(n);
+   vector<int>q(fs);
+   int mc=0;
+   for(int i=0;i<n;i++)
+   cin>>arr[i];
+   
+   string ms="M ",hi="H ";
+   string ans="";
+   
+   int ind=0;int i;
+   for(i=0;i<fs;i++)
+   {
+   q[ind]=arr[i];
+   ind = (ind+1)%fs;
+   ans=ans+ms;
+   mc++;
+   }
+   
+   for(;i<n;i++)
+   {
+     //prin(q);
+       if(serch(arr[i],q))
+          ans=ans+hi;
+          else
+          {
+            q[ind]=arr[i];
+            ind = (ind+1)%fs;
+            ans=ans+ms;
+            mc++;
+          }
+   }
+   
+   cout<<ans<<endl;
+   cout<<mc<<endl;
+   
+   
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  lru
+
+#include<bits/stdc++.h>
+using namespace std;
+ int fs;
+ 
+ list<int> dq;
+ map<int, list<int>::iterator> ma; 
+ 
+ string ms="M ",hi="H ";
+   string ans="";
+   int mc=0;
+   
+void add(int x)
+{
+    if (ma.find(x) == ma.end()) 
+    {
+          ans=ans+ms;
+          mc++;
+          
+        if (dq.size() == fs) 
+        {
+            int last = dq.back();
+            dq.pop_back();
+            ma.erase(last);
+        }
+    }
+    else
+        {dq.erase(ma[x]);
+     ans=ans+hi;
+         }
+
+    dq.push_front(x);
+    ma[x] = dq.begin();
+}
+  
+
+int main()
+{
+
+ 
+  cin>>fs;
+  int n;
+  cin>>n;
+  
+  vector<int>arr(n);
+  for(int i=0;i<n;i++)
+  cin>>arr[i];
+  for(int i=0;i<n;i++)
+  add(arr[i]);
+  cout<<ans<<endl;
+  cout<<mc<<endl;
+  
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// optimal
+
+#include<bits/stdc++.h>
+using namespace std;
+
+bool serch(int a,vector<int>arr)
+{
+    for(int i=0;i<arr.size();i++)
+    if(a==arr[i])return true;
+    return false;
+    
+}
+
+int fin(int a,vector<int>arr,int i)
+{
+    for(;i<arr.size();i++)
+    if(a==arr[i])return i;
+    
+    return i;
+    
+}
+
+void prin(vector<int>arr)
+ {
+   for(int i=0;i<arr.size();i++)
+   cout<<arr[i]<<" ";
+   cout<<endl;
+ }
+int main()
+{
+   int fs;
+   cin>>fs;
+   int n;
+   cin>>n;
+   vector<int>arr(n);
+   vector<int>q(fs);
+   int mc=0;
+   for(int i=0;i<n;i++)
+   cin>>arr[i];
+   
+   string ms="M ",hi="H ";
+   string ans="";
+   
+   int ind=0;int i;
+   for(i=0;i<fs;i++)
+   {
+   q[ind]=arr[i];
+   ind = (ind+1)%fs;
+   ans=ans+ms;
+   mc++;
+   }
+   
+   for(;i<n;i++)
+   {
+     //prin(q);
+       if(serch(arr[i],q))
+          ans=ans+hi;
+          else
+          {
+          ans=ans+ms;
+          mc++;
+           int rr=0;
+           int an=0;
+             for(int j=0;j<fs;j++)
+             {
+               
+               int ri=fin(q[j],arr,i);
+               if(ri>an)
+               {
+                an=ri;
+                rr=j;
+               }
+               
+             }
+             q[rr]=arr[i];
+            
+          }
+   }
+   cout<<ans<<endl<<mc<<endl;
+   
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// best fit
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+  int m;
+  cin>>m;
+  vector<int>b(m);
+  for(int i=0;i<m;i++)
+  cin>>b[i];
+  int n;
+  cin>>n;
+  vector<int>p(n);
+  for(int i=0;i<n;i++)
+  cin>>p[i];
+  
+  int a[n];
+  
+
+    memset(a, -1, sizeof(a));
+  
+    for(int i=0;i<n;i++)
+    {
+       int ind = -1;
+        for (int j=0; j<m; j++)
+        {
+            if (b[j] >= p[i])
+            {
+                if (ind == -1)
+                    ind = j;
+                else if (b[ind] > b[j])
+                    ind = j;
+            }
+        } 
+        
+        if(ind!=-1)
+        {
+        a[i]=ind;
+        b[ind]-=p[i];
+        }
+    }
+    
+    for(int i=0;i<n;i++)
+    {
+      cout<<i+1<<" -- >"<<a[i]+1<<endl;
+    } 
+
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// first fit
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+  int m;
+  cin>>m;
+  vector<int>b(m);
+  for(int i=0;i<m;i++)
+  cin>>b[i];
+  int n;
+  cin>>n;
+  vector<int>p(n);
+  for(int i=0;i<n;i++)
+  cin>>p[i];
+  
+  int a[n];
+  
+
+    memset(a, -1, sizeof(a));
+  
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (b[j] >= p[i])
+            {
+                a[i] = j;
+                b[j] -= p[i];
+               break;
+            }
+        }
+    }
+    
+    for(int i=0;i<n;i++)
+    {
+      cout<<i+1<<" -- >"<<a[i]+1<<endl;
+    } 
+
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//next fit
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+  int m;
+  cin>>m;
+  vector<int>b(m);
+  for(int i=0;i<m;i++)
+  cin>>b[i];
+  int n;
+  cin>>n;
+  vector<int>p(n);
+  for(int i=0;i<n;i++)
+  cin>>p[i];
+  
+  int a[n];
+  
+
+    memset(a, -1, sizeof(a));
+  int ind=0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            int id= (ind+j)%m;
+            if (b[id] >= p[i])
+            {
+                a[i] = j;
+                b[id] -= p[i];
+               break;
+            }
+        }
+    }
+    
+    for(int i=0;i<n;i++)
+    {
+      cout<<i+1<<" -- >"<<a[i]+1<<endl;
+    } 
+
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// worst fit
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+  int m;
+  cin>>m;
+  vector<int>b(m);
+  for(int i=0;i<m;i++)
+  cin>>b[i];
+  int n;
+  cin>>n;
+  vector<int>p(n);
+  for(int i=0;i<n;i++)
+  cin>>p[i];
+  
+  int a[n];
+  
+
+    memset(a, -1, sizeof(a));
+  
+    for(int i=0;i<n;i++)
+    {
+       int ind = -1;
+        for (int j=0; j<m; j++)
+        {
+            if (b[j] >= p[i])
+            {
+                if (ind == -1)
+                    ind = j;
+                else if (b[ind] < b[j])
+                    ind = j;
+            }
+        } 
+        
+        if(ind!=-1)
+        {
+        a[i]=ind;
+        b[ind]-=p[i];
+        }
+    }
+    
+    for(int i=0;i<n;i++)
+    {
+      cout<<i+1<<" -- >"<<a[i]+1<<endl;
+    } 
+
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// fixed partion best fit 
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+  int jn;
+  cin>>jn;
+  vector<int>p(jn);
+  for(int i=0;i<jn;i++)
+  cin>>p[i];
+  vector<int>ta(jn);
+  for(int i=0;i<jn;i++)
+  cin>>ta[i];
+  
+  int m;cin>>m;
+  vector<int>b(m);
+  for(int i=0;i<m;i++)
+  cin>>b[i];
+  vector<int>b1=b;
+  vector<int>vis(jn,0);
+  int a[jn];
+  memset(a, -1, sizeof(a));
+  
+  int num=0;
+  int n=jn;
+  vector<int>il(n,0);
+  while(num<n)
+  {
+     
+     
+     for(int i=0;i<n;i++)
+     {
+        if(vis[i]==1)
+        continue;
+        
+        int ind = -1;
+        for (int j=0; j<m; j++)
+        {
+            if (b[j] >= p[i])
+            {
+                if (ind == -1)
+                    ind = j;
+                else if (b[ind] > b[j])
+                    ind = j;
+            }
+        } 
+        
+        if(ind!=-1)
+        {
+        a[i]=ind;
+        b[ind]-=p[i];
+        vis[i]=1;
+        il[i]=ta[i]+1;num++;
+        }
+        
+     }
+     
+     for(int i=0;i<n;i++)
+     {
+       if(il[i]>0)
+       {
+        il[i]--;
+        if(il[i]==0)
+        {
+         b[a[i]]+=p[i];
+        }
+       }
+     }
+      
+  
+  }
+  
+  for(int i=0;i<n;i++)
+    {
+      cout<<i+1<<" -- >"<<a[i]+1<<endl;
+    } 
+
+
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //   fixed partion first fit
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+  int jn;
+  cin>>jn;
+  vector<int>p(jn);
+  for(int i=0;i<jn;i++)
+  cin>>p[i];
+  vector<int>ta(jn);
+  for(int i=0;i<jn;i++)
+  cin>>ta[i];
+  
+  int m;cin>>m;
+  vector<int>b(m);
+  for(int i=0;i<m;i++)
+  cin>>b[i];
+  vector<int>b1=b;
+  vector<int>vis(jn,0);
+  int a[jn];
+  memset(a, -1, sizeof(a));
+  
+  int num=0;
+  int n=jn;
+  vector<int>il(n,0);
+  while(num<n)
+  {
+     
+     
+     for(int i=0;i<n;i++)
+     {
+        if(vis[i]==1)
+        continue;
+        
+        for (int j = 0; j < m; j++)
+        {
+            if (b[j] >= p[i])
+            {
+                a[i] = j;
+                b[j] -= p[i];vis[i]=1;
+        il[i]=ta[i]+1;num++;
+               break;
+            }
+        }
+    
+    
+        
+     }
+     
+     for(int i=0;i<n;i++)
+     {
+       if(il[i]>0)
+       {
+        il[i]--;
+        if(il[i]==0)
+        {
+         b[a[i]]+=p[i];
+        }
+       }
+     }
+      
+  
+  }
+  
+  for(int i=0;i<n;i++)
+    {
+      cout<<i+1<<" -- >"<<a[i]+1<<endl;
+    } 
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
